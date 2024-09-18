@@ -1,14 +1,17 @@
 from crewai import Agent
 from dotenv import load_dotenv
 from tools import search_tool
+from langchain_google_genai import ChatGoogleGenerativeAI
 import os
 
 # Load the environment variables
 load_dotenv()
 
-# Set the API key for the SerpAPI tool
-os.environ['GEMINI_API_KEY'] = os.getenv('GEMINI_API_KEY')
-os.environ['SCRAPER_API_KEY'] = os.getenv('SCRAPER_API_KEY')
+## call the gemini models
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash",
+                           verbose=True,
+                           temperature=0.5,
+                           google_api_key=os.getenv("GEMINI_API_KEY"))
 
 
 researcher_backstory = """A Top AI Research scientist specialized in providing 
@@ -32,6 +35,7 @@ Research_Agent = Agent(role="Researcher",
                        tools=[search_tool],
                        memory=True,
                        verbose=True,
+                       llm=llm,
                        allow_delegation=True)
 
 # Create a Writer Agent
@@ -40,4 +44,5 @@ writer = Agent(role="Writer",
                backstory=writer_backstory,
                tools=[search_tool],
                verbose=True,
+               llm=llm,
                allow_delegation=False)

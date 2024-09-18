@@ -6,7 +6,8 @@ from tasks import Researcher_task, Writer_task
 
 # Create a Crew
 crew = Crew(agents=[Research_Agent, writer], 
-            tools=[search_tool],
+            tasks=[Researcher_task, Writer_task],
+            process=Process.sequential,
             memory=True,
             cache=True,
             verbose=True,
