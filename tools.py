@@ -1,5 +1,3 @@
-from crewai_tools import FileReadTool, SerperDevTool, WebsiteSearchTool
+from crewai_tools import SerperDevTool
 
-file_tool = FileReadTool()
 search_tool = SerperDevTool()
-web_rag_tool = WebsiteSearchTool()
